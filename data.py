@@ -2,7 +2,7 @@
 
 filename = "input.txt"
 
-def parseFile(name=filename):
+def parse_file(name=filename):
     cases = []
     f = open(name , 'r')
     line = f.readline()
@@ -32,3 +32,5 @@ def parseFile(name=filename):
 
         line = f.readline()
     return cases
+
+print(parse_file())
