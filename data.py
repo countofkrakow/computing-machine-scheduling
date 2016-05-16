@@ -32,5 +32,3 @@ def parse_file(name=filename):
 
         line = f.readline()
     return cases
-
-print(parse_file())
