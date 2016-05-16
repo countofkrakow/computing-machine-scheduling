@@ -13,17 +13,17 @@ def max(case):
         'profit_rate': 0
     }
 
-    return choose(empty_machine, case['C'], case['machines'], case['D'], [])
+    return choose(empty_machine, case['C'], case['machines'], case['D'])
 
-def choose(curr_machine, money, available_machines, total_days, history):
+def choose(curr_machine, money, available_machines, total_days):
     curr_day = curr_machine['day']
 
     # base case:
     if not available_machines:
-        return money + curr_machine['resale_price'] + (total_days - curr_day) * curr_machine['profit_rate'], history
+        return money + curr_machine['resale_price'] + (total_days - curr_day) * curr_machine['profit_rate']
 
     else:
-        best_profit, h = choose(curr_machine, money, [], total_days, history)
+        best_profit = choose(curr_machine, money, [], total_days)
 
         for machine in available_machines:
             next_day = machine['day']
@@ -36,16 +36,15 @@ def choose(curr_machine, money, available_machines, total_days, history):
                              curr_machine['profit_rate'] * (next_day - curr_day - 1)
 
                 next_machines = [x for x in available_machines if x['day'] > next_day]
-                profit, p = choose(machine, next_money, next_machines, total_days, history + [machine])
+                profit = choose(machine, next_money, next_machines, total_days)
                 if profit > best_profit:
                     best_profit = profit
-                    h = p
-        return best_profit, h
+        return best_profit
 
 def main():
     data = parse_file()
     for i, case in enumerate(data):
-        result, h = max(case)
+        result = max(case)
         print("Case %d: %d" % (i, result))
 
 if __name__ == '__main__':
